@@ -27,66 +27,68 @@ import java.util.Scanner;
 public class Shop {
 
     private final Scanner input;
-    private ArrayList listSurveys;
+    private User userLogin;
+    protected ArrayList<User> users;
+    private final Login log;
 
     public Shop() {
         input = new Scanner(System.in);
-        listSurveys = new ArrayList();
-        MainMenu();
+        users = new ArrayList();
+        log = new Login(this);
     }
 
-    public void MainMenu() {
-        System.out.println("""                           
-                           \n\nWhat you want to do:
-                              1.Ask students.
-                              2.View student interviews.
-                              3.Buy electronic devices.
-                              4.Exit""");
+    public void MenuEnter() {
+        System.out.println("""
+                           Do you already have an account?
+                               1.Yes.
+                               2.No.  
+                               3.End program.
+                           """);
         try {
-            System.out.println("Type the option: ");
             switch (Integer.parseInt(input.nextLine())) {
-                case 1 -> {
-                    AskStudents();
-                }
+                case 1 ->
+                    log.LoginUser();
                 case 2 ->
-                    ViewStudentInterviews();
+                    log.LoginNewUser();
                 case 3 ->
-                    System.out.println("3");
-                case 4 -> {
-                    System.out.println("4");
-                    System.out.println("\n\nThank you Goodbye");
-                }
-
+                    System.out.println("Thanks for using the program");
                 default ->
-                    System.out.println("\nInvalid option\n");
+                    System.out.println("\\nInvalid option\\n");
             }
         } catch (NumberFormatException e) {
-            System.out.println("\nInvalid option\n");
+            System.out.println("\\nInvalid option\\n");
         }
     }
 
-    public void AskStudents() {
-        for (int i = 0; i < 15; i++) {
-            System.out.println("\nStudent N_" + (i + 1));
-            System.out.println("\nEnter your name:");
-            String name = input.nextLine();
-            System.out.println("\nWhat does he do:");
-            String office = input.nextLine();
-            System.out.println("\nwhich device would you like us to add to our catalog:");
-            String device = input.nextLine();
-            System.out.println("\nWhat you want to do with this device:");
-            String action = input.nextLine();
-            listSurveys.add("I " + name + " as " + office + " I want a " + device + " to " + action);
-
+    public void MainMenu(User userLogin) {
+        this.userLogin = userLogin;
+        System.out.println("""
+                           What do you want to do?:
+                               1. Choose devices.
+                               2. Pay cart devices.
+                               3. Consult invoices;
+                               4. Exit. 
+                           """);
+        try {
+            switch (Integer.parseInt(input.nextLine())) {
+                case 1 ->
+                    DevicesMenu();
+                case 2 ->
+                    PayCartDevices();
+                case 3 ->
+                    MenuEnter();
+                default ->
+                    System.out.println("\\nInvalid option\\n");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("\\nInvalid option\\n");
         }
-        System.out.println("\n\nCompleted questions");
-        MainMenu();
     }
 
-    public void ViewStudentInterviews() {
-        for (int i = 0; i < listSurveys.size(); i++) {
-            System.out.println("\nStudent N_"+(i+1)+"\n "+listSurveys.get(i));
-        }
-        MainMenu();
+    public void DevicesMenu() {
     }
+
+    public void PayCartDevices() {
+    }
+
 }
