@@ -35,6 +35,7 @@ public class Shop {
         input = new Scanner(System.in);
         users = new ArrayList();
         log = new Login(this);
+        MenuEnter();
     }
 
     public void MenuEnter() {
@@ -46,8 +47,13 @@ public class Shop {
                            """);
         try {
             switch (Integer.parseInt(input.nextLine())) {
-                case 1 ->
-                    log.LoginUser();
+                case 1 -> {
+                    if (log.LoginUser()) {
+                    } else {
+                        System.out.println("Unregistered user\n");
+                        MenuEnter();
+                    }
+                }
                 case 2 ->
                     log.LoginNewUser();
                 case 3 ->
@@ -76,6 +82,8 @@ public class Shop {
                 case 2 ->
                     PayCartDevices();
                 case 3 ->
+                    ConsultInvoices();
+                case 4 ->
                     MenuEnter();
                 default ->
                     System.out.println("\\nInvalid option\\n");
@@ -89,6 +97,9 @@ public class Shop {
     }
 
     public void PayCartDevices() {
+    }
+
+    public void ConsultInvoices() {
     }
 
 }
