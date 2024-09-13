@@ -24,50 +24,20 @@ package ApplianceStore;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Shop {
+public final class Shop {
 
     private final Scanner input;
-    private User userLogin;
-    protected ArrayList<User> users;
-    private final Login log;
+    private ArrayList<Receipt> receipts;
+    private ArrayList shCart;
 
     public Shop() {
         input = new Scanner(System.in);
-        users = new ArrayList();
-        log = new Login(this);
-        MenuEnter();
+        shCart = new ArrayList();
+        receipts = new ArrayList();
+        MainMenu();
     }
 
-    public void MenuEnter() {
-        System.out.println("""
-                           Do you already have an account?
-                               1.Yes.
-                               2.No.  
-                               3.End program.
-                           """);
-        try {
-            switch (Integer.parseInt(input.nextLine())) {
-                case 1 -> {
-                    if (log.LoginUser()) {
-                    } else {
-                        System.out.println("Unregistered user\n");
-                        MenuEnter();
-                    }
-                }
-                case 2 ->
-                    log.LoginNewUser();
-                case 3 ->
-                    System.out.println("Thanks for using the program");
-                default ->
-                    System.out.println("\\nInvalid option\\n");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("\\nInvalid option\\n");
-        }
-    }
-
-    public void MainMenu(User userLogin) {
-        this.userLogin = userLogin;
+    public void MainMenu() {
         System.out.println("""
                            What do you want to do?:
                                1. Choose devices.
@@ -83,17 +53,109 @@ public class Shop {
                     PayCartDevices();
                 case 3 ->
                     ConsultInvoices();
-                case 4 ->
-                    MenuEnter();
-                default ->
-                    System.out.println("\\nInvalid option\\n");
+                case 4 -> {
+                    System.out.println("\nThank you for using the program.\n");
+                    System.exit(0);
+                }
+                default -> {
+                    System.out.println("\nInvalid option\n");
+                    MainMenu();
+                }
             }
         } catch (NumberFormatException e) {
-            System.out.println("\\nInvalid option\\n");
+            System.out.println("\nInvalid option\n");
+            MainMenu();
         }
     }
 
     public void DevicesMenu() {
+        System.out.println("""
+                           How do you want to search for your device?:
+                               1. Show all.
+                               2. Category.
+                               3. Exit. 
+                           """);
+        try {
+            switch (Integer.parseInt(input.nextLine())) {
+                case 1 ->
+                    AllDevices();
+                case 2 ->
+                    AllDevices();
+                case 3 ->
+                    MainMenu();
+                default -> {
+                    System.out.println("\nInvalid option\n");
+                    DevicesMenu();
+                }
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("\nInvalid option\n");
+            DevicesMenu();
+        }
+    }
+
+    public void AllDevices() {
+        boolean com = true;
+        System.out.println("\nAll devices in the storen:");
+        int i = 1;
+        for (SmartHomeDevices smartHome : SmartHomeDevices.values()) {
+            System.out.println(i + " " + smartHome.name());
+            i++;
+        }
+        for (ComputersAccessories ComAc : ComputersAccessories.values()) {
+            System.out.println(i + " " + ComAc.name());
+            i++;
+        }
+        for (PhonesAccessories PhoAc : PhonesAccessories.values()) {
+            System.out.println(i + " " + PhoAc.name());
+            i++;
+        }
+        while (com) {
+            try {
+                System.out.println("""
+                                   \nChoose which of the devices you want to 
+                                   add to the shopping cart or select 0 to exit.
+                                   """);
+                int sel = Integer.parseInt(input.nextLine());
+
+                if (sel <= 5 && sel > 0) {
+                    i = 0;
+                    for (SmartHomeDevices smartHome : SmartHomeDevices.values()) {
+                        if ((sel - 1) == i) {
+                            shCart.add(smartHome);
+                            System.out.println("Successfully added:" + smartHome.name() + "\n");
+                        }
+                        i++;
+                    }
+                } else if (sel > 5 && sel <= 10) {
+                    i = 0;
+                    for (ComputersAccessories ComAc : ComputersAccessories.values()) {
+                        if ((sel - 6) == i) {
+                            shCart.add(ComAc);
+                            System.out.println("Successfully added:" + ComAc.name() + "\n");
+                        }
+                        i++;
+                    }
+                } else if (sel > 10 && sel <= 15) {
+                    i = 0;
+                    for (PhonesAccessories PhoAc : PhonesAccessories.values()) {
+                        if ((sel - 11) == i) {
+                            shCart.add(PhoAc);
+                            System.out.println("Successfully added:" + PhoAc.name() + "\n");
+                        }
+                        i++;
+                    }
+                } else if (sel == 0) {
+                    com = false;
+                } else {
+                    System.out.println("\nInvalid option\n");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("\nInvalid option\n");
+            }
+        }
+        DevicesMenu();
     }
 
     public void PayCartDevices() {
