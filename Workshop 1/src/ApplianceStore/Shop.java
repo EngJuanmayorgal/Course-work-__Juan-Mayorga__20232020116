@@ -27,8 +27,9 @@ import java.util.Scanner;
 public final class Shop {
 
     private final Scanner input;
-    private ArrayList<Receipt> receipts;
+    private final ArrayList<Receipt> receipts;
     private ArrayList shCart;
+    private boolean com;
 
     public Shop() {
         input = new Scanner(System.in);
@@ -38,7 +39,9 @@ public final class Shop {
     }
 
     public void MainMenu() {
-        System.out.println("""
+        com = true;
+        while (com) {
+            System.out.println("""
                            
                            What do you want to do?:
                                1. Choose devices.
@@ -46,26 +49,35 @@ public final class Shop {
                                3. Consult invoices;
                                4. Exit. 
                            """);
-        try {
-            switch (Integer.parseInt(input.nextLine())) {
-                case 1 ->
-                    DevicesMenu();
-                case 2 ->
-                    PayCartDevices();
-                case 3 ->
-                    ConsultInvoices();
-                case 4 -> {
-                    System.out.println("\nThank you for using the program.\n");
-                    System.exit(0);
+            try {
+                switch (Integer.parseInt(input.nextLine())) {
+                    case 1 ->
+                        DevicesMenu();
+                    case 2 -> {
+                        if (!shCart.isEmpty()) {
+                            PayCartDevices();
+                        } else {
+                            System.out.println("\nNo devices in the cart.");
+                        }
+                    }
+                    case 3 -> {
+                        if (!receipts.isEmpty()) {
+                            ConsultInvoices();
+                        } else {
+                            System.out.println("\nNo invoices recorded.");
+                        }
+                    }
+                    case 4 -> {
+                        System.out.println("\nThank you for using the program.\n");
+                        System.exit(0);
+                    }
+                    default -> {
+                        System.out.println("\nInvalid option\n");
+                    }
                 }
-                default -> {
-                    System.out.println("\nInvalid option\n");
-                    MainMenu();
-                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nInvalid option\n");
             }
-        } catch (NumberFormatException e) {
-            System.out.println("\nInvalid option\n");
-            MainMenu();
         }
     }
 
@@ -97,7 +109,7 @@ public final class Shop {
     }
 
     public void AllDevices() {
-        boolean com = true;
+        com = true;
         System.out.println("""
                            
                            All devices in the storen:
@@ -176,7 +188,7 @@ public final class Shop {
                                4. Exit. 
                            """);
         try {
-            boolean com = true;
+            com = true;
             switch (Integer.parseInt(input.nextLine())) {
                 case 1 -> {
                     int i = 1;
@@ -313,7 +325,7 @@ public final class Shop {
     }
 
     public void PayCartDevices() {
-        boolean com = true;
+        com = true;
         System.out.println("""
                            
                            Devices in the shopping cart:
@@ -335,6 +347,7 @@ public final class Shop {
                     case 1 -> {
                         PayDevices();
                         System.out.println("\nSuccessfully generated invoice.");
+                        shCart = new ArrayList();
                         com = false;
                     }
                     default -> {
@@ -359,12 +372,11 @@ public final class Shop {
         System.out.println("Enter the address: ");
         String address = input.nextLine();
         Receipt receipt = new Receipt(name, address, shCart);
-        shCart.clear();
         receipts.add(receipt);
     }
 
     public void ConsultInvoices() {
-        boolean com = true;
+        com = true;
         System.out.println("""
                            
                            These are all the invoices generated.
@@ -383,7 +395,7 @@ public final class Shop {
                                """);
             try {
                 int sel = Integer.parseInt(input.nextLine());
-                if (com) {
+                if (sel>0&&sel<=receipts.size()) {
                     Receipt receipt = receipts.get(sel - 1);
                     System.out.println("""
                                        
@@ -406,6 +418,7 @@ public final class Shop {
                                        #=======================================
                                        
                                        """);
+                } else if (sel == 0) {
                     com = false;
                 } else {
                     System.out.println("\nInvalid option\n");
