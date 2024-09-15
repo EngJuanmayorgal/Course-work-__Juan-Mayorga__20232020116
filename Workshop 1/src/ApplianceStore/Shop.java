@@ -1,5 +1,5 @@
 /**
- * This module will try to recreate some options of an appliance store.
+ * This module will try to recreate an application for purchasing electronic devices.
  *
  * Copyright (C) 2024  Juan David Mayorga Lopez <jeidenmayo13752@gmail.com>
  *
@@ -16,8 +16,16 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * This class represents an appliance store.
+ *
+ * Args:
+ *  input (Scanner): Allows me to enter the data.
+ *  receipts (ArrayList<Receipt>): Keep the receipts made.
+ *  shCart (ArrayList): It is the shopping cart where the chosen devices are stored.
+ *  com (boolean): It is used in some menus.
+ * 
  */
 package ApplianceStore;
 
@@ -39,6 +47,17 @@ public final class Shop {
     }
 
     public void MainMenu() {
+        /* This method recreates the main menu of the application.
+     *
+     * In this method we will decide what to do in the application,
+     * whether it is paying bills, adding devices to the shopping cart and 
+     * reviewing bills that have already been paid.
+     *   
+     * Args:
+     *
+     * Returns:
+     * 
+         */
         com = true;
         while (com) {
             System.out.println("""
@@ -82,6 +101,15 @@ public final class Shop {
     }
 
     public void DevicesMenu() {
+        /* Menu to see the devices.
+     *
+     *With this method you will choose how you want to see the devices
+     *   
+     * Args:
+     *
+     * Returns:
+     * 
+         */
         System.out.println("""
                            
                            How do you want to search for your device?:
@@ -109,6 +137,17 @@ public final class Shop {
     }
 
     public void AllDevices() {
+        /* This method will show all devices.
+     *
+     *This method will show me all the devices and 
+     allow me to add them to the shopping cart.
+     *   
+     * Args:
+     *  i (int): serves as an accountant.
+     *  sel (int): Choose which option you want to choose from the menu.
+     * Returns:
+     * 
+         */
         com = true;
         System.out.println("""
                            
@@ -179,6 +218,16 @@ public final class Shop {
     }
 
     public void Devicescategory() {
+        /* This method is a menu categories.
+     *
+     * menu that allows me to choose which category
+     * I want to see and allows me to add devices to the shopping cart
+     *   
+     * Args:
+     *  i (int): serves as an accountant.
+     * Returns:
+     * 
+         */
         System.out.println("""
                                        
                            Choose Category:
@@ -325,6 +374,16 @@ public final class Shop {
     }
 
     public void PayCartDevices() {
+        /* This method pays for devices in the shopping cart.
+     *
+     * This method allows me to pay for the devices in the 
+     * shopping cart and empties it.
+     *   
+     * Args:
+     *
+     * Returns:
+     * 
+         */
         com = true;
         System.out.println("""
                            
@@ -362,6 +421,17 @@ public final class Shop {
     }
 
     public void PayDevices() {
+        /* This method creates the invoice.
+     *
+     * This method requests the user's data and creates the invoice.
+     *   
+     * Args:
+     * name (String): username.
+     * address (String): user address.
+     *
+     * Returns:
+     * 
+         */
         System.out.println("""
                            
                            Enter your details to be able to ship.
@@ -376,6 +446,15 @@ public final class Shop {
     }
 
     public void ConsultInvoices() {
+        /* This method allows me to see paid invoices.
+     *
+     * This method searches in "receipt" and shows all the invoices.
+     *   
+     * Args:
+     * i (int): serves as an accountant.
+     * Returns:
+     * 
+         */
         com = true;
         System.out.println("""
                            
@@ -395,7 +474,7 @@ public final class Shop {
                                """);
             try {
                 int sel = Integer.parseInt(input.nextLine());
-                if (sel>0&&sel<=receipts.size()) {
+                if (sel > 0 && sel <= receipts.size()) {
                     Receipt receipt = receipts.get(sel - 1);
                     System.out.println("""
                                        
