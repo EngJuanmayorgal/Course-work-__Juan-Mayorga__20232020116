@@ -8,10 +8,10 @@ public class Receipt {
 
     private final String name;
     private final String address;
-    private final ArrayList dev;
+    private final ArrayList<Object> dev;
     private final String today;
 
-    public Receipt(String name, String address, ArrayList dev) {
+    public Receipt(String name, String address, ArrayList<Object> dev) {
         this.name = name;
         this.address = address;
         this.dev = dev;
@@ -31,7 +31,7 @@ public class Receipt {
         return address;
     }
 
-    public ArrayList getDev() {
+    public ArrayList<Object> getDev() {
         return dev;
     }
 

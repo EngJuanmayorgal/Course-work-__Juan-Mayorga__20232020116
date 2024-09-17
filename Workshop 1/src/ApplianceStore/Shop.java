@@ -28,13 +28,13 @@ public final class Shop {
 
     private final Scanner input;
     private final ArrayList<Receipt> receipts;
-    private ArrayList shCart;
+    private ArrayList<Object> shCart;
     private boolean com;
 
     public Shop() {
         input = new Scanner(System.in);
-        shCart = new ArrayList();
-        receipts = new ArrayList();
+        shCart = new ArrayList<Object>();
+        receipts = new ArrayList<Receipt>();
         MainMenu();
     }
 
@@ -347,7 +347,7 @@ public final class Shop {
                     case 1 -> {
                         PayDevices();
                         System.out.println("\nSuccessfully generated invoice.");
-                        shCart = new ArrayList();
+                        shCart = new ArrayList<Object>();
                         com = false;
                     }
                     default -> {
