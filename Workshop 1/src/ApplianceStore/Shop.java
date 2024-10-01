@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 /**
  * This class represents an appliance store.
  *
  * Args:
  *  input (Scanner): Allows me to enter the data.
- *  receipts (ArrayList<Receipt>): Keep the receipts made.
- *  shCart (ArrayList): It is the shopping cart where the chosen devices are stored.
- *  com (boolean): It is used in some menus.
- * 
+ *  receipts (ArrayList<Receipt>): Keep the receipts made. shCart (ArrayList): It
+ * is the shopping cart where the chosen devices are stored. com (boolean): It
+ * is used in some menus.
+ *
  */
 package ApplianceStore;
 
